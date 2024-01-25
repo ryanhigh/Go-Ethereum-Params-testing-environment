@@ -1,0 +1,204 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ethereum-test-node1
+  labels:
+    buaa-gitlab-ci: 'ethereum-test'
+spec:
+  selector:
+    matchLabels:
+      app: ethereum-test-node1
+  template:
+    metadata:
+      labels:
+        app: ethereum-test-node1
+    spec:
+      nodeName: 192.168.0.41
+      containers:
+      - name: node
+        image: swr.cn-north-4.myhuaweicloud.com/buaa-dist-compute-ci/ethereum-recorder:4_9
+        workingDir: '/usr/local/bin'
+        command: ['sh','-c']
+        args:
+        - |
+          set -x
+          trap : TERM INT; sleep infinity & wait
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "2"
+        ports:
+        - containerPort: 30303
+        - containerPort: 8545
+        - containerPort: 8546
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ethereum-test-instance1
+  labels:
+    buaa-gitlab-ci: 'ethereum-test'
+spec:
+  type: NodePort
+  selector:
+    app: ethereum-test-node1
+  ports:
+  - name: p2p
+    nodePort: 30303
+    port: 30303
+    targetPort: 30303
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ethereum-test-node2
+  labels:
+    buaa-gitlab-ci: 'ethereum-test'
+spec:
+  selector:
+    matchLabels:
+      app: ethereum-test-node2
+  template:
+    metadata:
+      labels:
+        app: ethereum-test-node2
+    spec:
+      nodeName: 192.168.0.88
+      containers:
+      - name: node
+        image: swr.cn-north-4.myhuaweicloud.com/buaa-dist-compute-ci/ethereum-recorder:4_9
+        workingDir: '/usr/local/bin'
+        command: ['sh','-c']
+        args:
+        - |
+          set -x
+          trap : TERM INT; sleep infinity & wait
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "2"
+        ports:
+        - containerPort: 30303
+        - containerPort: 8545
+        - containerPort: 8546
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ethereum-test-instance2
+  labels:
+    buaa-gitlab-ci: 'ethereum-test'
+spec:
+  type: NodePort
+  selector:
+    app: ethereum-test-node2
+  ports:
+  - name: p2p
+    nodePort: 30304
+    port: 30304
+    targetPort: 30303
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ethereum-test-node3
+  labels:
+    buaa-gitlab-ci: 'ethereum-test'
+spec:
+  selector:
+    matchLabels:
+      app: ethereum-test-node3
+  template:
+    metadata:
+      labels:
+        app: ethereum-test-node3
+    spec:
+      nodeName: 192.168.0.48
+      containers:
+      - name: node
+        image: swr.cn-north-4.myhuaweicloud.com/buaa-dist-compute-ci/ethereum-recorder:4_9
+        workingDir: '/usr/local/bin'
+        command: ['sh','-c']
+        args:
+        - |
+          set -x
+          trap : TERM INT; sleep infinity & wait
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "2"
+        ports:
+        - containerPort: 30303
+        - containerPort: 8545
+        - containerPort: 8546
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ethereum-test-instance3
+  labels:
+    buaa-gitlab-ci: 'ethereum-test'
+spec:
+  type: NodePort
+  selector:
+    app: ethereum-test-node3
+  ports:
+  - name: p2p
+    nodePort: 30305
+    port: 30305
+    targetPort: 30303
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ethereum-test-node4
+  labels:
+    buaa-gitlab-ci: 'ethereum-test'
+spec:
+  selector:
+    matchLabels:
+      app: ethereum-test-node4
+  template:
+    metadata:
+      labels:
+        app: ethereum-test-node4
+    spec:
+      nodeName: 192.168.0.103
+      containers:
+      - name: node
+        image: swr.cn-north-4.myhuaweicloud.com/buaa-dist-compute-ci/ethereum-recorder:4_9
+        workingDir: '/usr/local/bin'
+        command: ['sh','-c']
+        args:
+        - |
+          set -x
+          trap : TERM INT; sleep infinity & wait
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "2"
+        ports:
+        - containerPort: 30303
+        - containerPort: 8545
+        - containerPort: 8546
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ethereum-test-instance4
+  labels:
+    buaa-gitlab-ci: 'ethereum-test'
+spec:
+  type: NodePort
+  selector:
+    app: ethereum-test-node4
+  ports:
+  - name: p2p
+    nodePort: 30306
+    port: 30306
+    targetPort: 30303
+

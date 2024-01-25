@@ -1,0 +1,777 @@
+# 关闭pod
+# make stop
+# 清除节点配置文件
+make clear
+make[1]: 进入目录“/home/songweihu/projects/eth/ethereum-recorder”
+rm -rf docker_data/node*
+make[1]: 离开目录“/home/songweihu/projects/eth/ethereum-recorder”
+# 生成节点配置文件
+make create
+make[1]: 进入目录“/home/songweihu/projects/eth/ethereum-recorder”
+# if [ ! -d "older_path" ]; then
+# 	mkdir "older_path"
+# 	echo "Folder created: older_path"
+# else
+# 	echo "Folder already exists: older_path"
+# fi
+echo "20231110\n20231110" | ./build/bin/geth --datadir docker_data/node1/ account new
+Your new account is locked with a password. Please give a password. Do not forget this password.
+!! Unsupported terminal, password will be echoed.
+Password: 
+Repeat password: 
+
+Your new key was generated
+
+Public address of the key:   0x1054119eb883f7613Bc4236128F165dcEb1bC17f
+Path of the secret key file: docker_data/node1/keystore/UTC--2023-11-10T08-14-44.505134931Z--1054119eb883f7613bc4236128f165dceb1bc17f
+
+- You can share your public address with anyone. Others need it to interact with you.
+- You must NEVER share the secret key with anyone! The key controls access to your funds!
+- You must BACKUP your key file! Without the key, it's impossible to access account funds!
+- You must REMEMBER your password! Without the password, it's impossible to decrypt the key!
+
+echo "20231110\n20231110" | ./build/bin/geth --datadir docker_data/node2/ account new
+Your new account is locked with a password. Please give a password. Do not forget this password.
+!! Unsupported terminal, password will be echoed.
+Password: 
+Repeat password: 
+
+Your new key was generated
+
+Public address of the key:   0x89829Ced7bD719498337EB2f60A37e7151805dB5
+Path of the secret key file: docker_data/node2/keystore/UTC--2023-11-10T08-14-47.610970074Z--89829ced7bd719498337eb2f60a37e7151805db5
+
+- You can share your public address with anyone. Others need it to interact with you.
+- You must NEVER share the secret key with anyone! The key controls access to your funds!
+- You must BACKUP your key file! Without the key, it's impossible to access account funds!
+- You must REMEMBER your password! Without the password, it's impossible to decrypt the key!
+
+echo "20231110\n20231110" | ./build/bin/geth --datadir docker_data/node3/ account new
+Your new account is locked with a password. Please give a password. Do not forget this password.
+!! Unsupported terminal, password will be echoed.
+Password: 
+Repeat password: 
+
+Your new key was generated
+
+Public address of the key:   0xCf1bE00c18720B9F96452dA741CF550156Da8eaf
+Path of the secret key file: docker_data/node3/keystore/UTC--2023-11-10T08-14-50.159647250Z--cf1be00c18720b9f96452da741cf550156da8eaf
+
+- You can share your public address with anyone. Others need it to interact with you.
+- You must NEVER share the secret key with anyone! The key controls access to your funds!
+- You must BACKUP your key file! Without the key, it's impossible to access account funds!
+- You must REMEMBER your password! Without the password, it's impossible to decrypt the key!
+
+echo "20231110\n20231110" | ./build/bin/geth --datadir docker_data/node4/ account new
+Your new account is locked with a password. Please give a password. Do not forget this password.
+!! Unsupported terminal, password will be echoed.
+Password: 
+Repeat password: 
+
+Your new key was generated
+
+Public address of the key:   0xaD94A57D0ECc42C157c59F5D6678092A9985E0d4
+Path of the secret key file: docker_data/node4/keystore/UTC--2023-11-10T08-14-54.025327264Z--ad94a57d0ecc42c157c59f5d6678092a9985e0d4
+
+- You can share your public address with anyone. Others need it to interact with you.
+- You must NEVER share the secret key with anyone! The key controls access to your funds!
+- You must BACKUP your key file! Without the key, it's impossible to access account funds!
+- You must REMEMBER your password! Without the password, it's impossible to decrypt the key!
+
+echo "20231110" > docker_data/node1/password.txt
+echo "20231110" > docker_data/node2/password.txt
+echo "20231110" > docker_data/node3/password.txt
+echo "20231110" > docker_data/node4/password.txt
+make[1]: 离开目录“/home/songweihu/projects/eth/ethereum-recorder”
+# 更改节点配置、启动文件，创世区块文件
+# 处理节点1和P2P网络平均传输时延节点修改(暂未改)
+python modify.py false
+文件路径： ./docker_data/node1/keystore/UTC--2023-11-10T08-14-44.505134931Z--1054119eb883f7613bc4236128f165dceb1bc17f
+文件路径： ./docker_data/node2/keystore/UTC--2023-11-10T08-14-47.610970074Z--89829ced7bd719498337eb2f60a37e7151805db5
+文件路径： ./docker_data/node3/keystore/UTC--2023-11-10T08-14-50.159647250Z--cf1be00c18720b9f96452da741cf550156da8eaf
+文件路径： ./docker_data/node4/keystore/UTC--2023-11-10T08-14-54.025327264Z--ad94a57d0ecc42c157c59f5d6678092a9985e0d4
+# build、push IMAGE
+make push
+make[1]: 进入目录“/home/songweihu/projects/eth/ethereum-recorder”
+sudo docker build -t swr.cn-north-4.myhuaweicloud.com/buaa-dist-compute-ci/ethereum-recorder:4_2 -f build.Dockerfile .
+Sending build context to Docker daemon  111.7MB
+Step 1/20 : FROM golang:1.19-alpine as builder
+ ---> 5da886f1a5e7
+Step 2/20 : RUN apk add --no-cache gcc musl-dev linux-headers git
+ ---> Using cache
+ ---> 637bfade6c0f
+Step 3/20 : RUN go env -w GO111MODULE=on
+ ---> Using cache
+ ---> e1a73d0875be
+Step 4/20 : RUN go env -w GOPROXY=https://goproxy.cn
+ ---> Using cache
+ ---> 4cf9398e5f44
+Step 5/20 : RUN go env
+ ---> Using cache
+ ---> 7019b9147a43
+Step 6/20 : COPY go.mod /go-ethereum/
+ ---> Using cache
+ ---> 2c6b488d7b8e
+Step 7/20 : COPY go.sum /go-ethereum/
+ ---> Using cache
+ ---> beb1102f2bb3
+Step 8/20 : ADD . /go-ethereum
+ ---> 5e78492c705b
+Step 9/20 : RUN cd /go-ethereum && go mod download
+ ---> Running in 1dea15a895a1
+Removing intermediate container 1dea15a895a1
+ ---> f4ef6cac9048
+Step 10/20 : RUN cd /go-ethereum && go run build/ci.go install -static ./cmd/geth
+ ---> Running in da26efbfa163
+>>> /usr/local/go/bin/go build -ldflags "-X github.com/ethereum/go-ethereum/internal/version.gitCommit=d8f3930b319f166b0ad95c0bd7525cefd1d55a97 -X github.com/ethereum/go-ethereum/internal/version.gitDate=20231107 -extldflags '-Wl,-z,stack-size=0x800000 -static'" -tags urfave_cli_no_docs,osusergo,netgo -trimpath -v -o /go-ethereum/build/bin/geth ./cmd/geth
+[91minternal/nettrace
+internal/goarch
+[0m[91minternal/goos
+internal/unsafeheader
+[0m[91minternal/goexperiment
+internal/race
+[0m[91municode/utf8
+[0m[91mmath/bits
+[0m[91mgithub.com/getsentry/sentry-go/internal/otel/baggage/internal/baggage
+github.com/go-playground/locales/currency
+[0m[91municode
+[0m[91mgolang.org/x/exp/constraints
+[0m[91mvendor/golang.org/x/crypto/internal/subtle
+[0m[91minternal/itoa
+[0m[91municode/utf16
+[0m[91mgithub.com/cockroachdb/pebble/internal/rawalloc
+[0m[91mruntime/internal/atomic
+[0m[91mruntime/internal/syscall
+[0m[91mruntime/internal/math
+internal/abi
+[0m[91mhash/maphash
+[0m[91mgithub.com/cockroachdb/pebble/internal/bytealloc
+[0m[91mruntime/internal/sys
+[0m[91mgoogle.golang.org/protobuf/internal/flags
+[0m[91mencoding
+[0m[91mgoogle.golang.org/protobuf/internal/set
+[0m[91mcrypto/internal/boring/sig
+[0m[91mgithub.com/ethereum/go-ethereum/internal/web3ext
+[0m[91mgithub.com/graph-gophers/graphql-go/decode
+[0m[91mgithub.com/ethereum/go-ethereum/internal/syncx
+[0m[91msync/atomic
+[0m[91minternal/cpu
+[0m[91mcrypto/internal/subtle
+[0m[91mgithub.com/cockroachdb/pebble/internal/fastrand
+[0m[91mcontainer/list
+[0m[91mvendor/golang.org/x/crypto/cryptobyte/asn1
+[0m[91mgithub.com/influxdata/influxdb-client-go/v2/internal/http
+[0m[91mcontainer/ring
+[0m[91mgithub.com/cockroachdb/errors/stdstrings
+[0m[91mgithub.com/cockroachdb/pebble/internal/invariants
+[0m[91mgithub.com/gin-gonic/gin/internal/bytesconv
+[0m[91minternal/goversion
+[0m[91mcrypto/subtle
+[0m[91minternal/bytealg
+[0m[91mmath
+[0m[91mruntime
+[0m[91mruntime/metrics
+internal/reflectlite
+sync
+[0m[91mmath/rand
+[0m[91minternal/singleflight
+[0m[91mgoogle.golang.org/protobuf/internal/pragma
+[0m[91mgithub.com/ethereum/go-ethereum/common/lru
+github.com/cockroachdb/pebble/internal/intern
+[0m[91minternal/sysinfo
+[0m[91mgithub.com/crate-crypto/go-ipa/common/parallel
+[0m[91minternal/testlog
+[0m[91mruntime/cgo
+[0m[91merrors
+[0m[91msort
+[0m[91minternal/oserror
+internal/safefilepath
+[0m[91mio
+[0m[91mpath
+[0m[91mgithub.com/ethereum/go-ethereum/common/bitutil
+[0m[91mvendor/golang.org/x/net/dns/dnsmessage
+[0m[91mstrconv
+[0m[91mcrypto/internal/nistec/fiat
+[0m[91msyscall
+[0m[91mgithub.com/gogo/protobuf/sortkeys
+container/heap
+[0m[91mgithub.com/beorn7/perks/quantile
+[0m[91mgolang.org/x/text/internal/tag
+[0m[91mgolang.org/x/text/unicode/rangetable
+[0m[91mhash
+[0m[91mstrings
+[0m[91mcrypto/internal/randutil
+[0m[91mbytes
+[0m[91mtext/tabwriter
+github.com/cockroachdb/pebble/objstorage/shared
+github.com/ethereum/go-ethereum/ethdb
+[0m[91mgithub.com/go-sourcemap/sourcemap/internal/base64vlq
+[0m[91mhash/fnv
+[0m[91mhash/crc32
+[0m[91mgithub.com/cockroachdb/pebble/internal/crc
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/comparer
+github.com/kr/text
+[0m[91mgolang.org/x/text/transform
+vendor/golang.org/x/text/transform
+[0m[91mcrypto/rc4
+[0m[91mencoding/base32
+crypto
+github.com/dop251/goja/token
+[0m[91mreflect
+[0m[91mnet/http/internal/ascii
+[0m[91mgithub.com/influxdata/influxdb/pkg/escape
+github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg
+go/build/constraint
+bufio
+[0m[91mregexp/syntax
+[0m[91mhtml
+[0m[91mgolang.org/x/crypto/ripemd160
+[0m[91mgithub.com/ethereum/go-ethereum/common/fdlimit
+internal/syscall/execenv
+[0m[91minternal/syscall/unix
+[0m[91mtime
+[0m[91mregexp
+[0m[91mgithub.com/cockroachdb/pebble/internal/manual
+[0m[91mgithub.com/naoina/toml/ast
+context
+github.com/go-playground/locales
+github.com/ethereum/go-ethereum/common/mclock
+[0m[91mio/fs
+[0m[91minternal/poll
+[0m[91mgithub.com/ethereum/go-ethereum/common/prque
+[0m[91membed
+[0m[91mgithub.com/ethereum/go-ethereum/eth/tracers/js/internal/tracers
+[0m[91mgithub.com/ethereum/go-ethereum/internal/jsre/deps
+[0m[91mos
+[0m[91mgithub.com/cockroachdb/redact/internal/rfmt/fmtsort
+github.com/rogpeppe/go-internal/fmtsort
+internal/fmtsort
+[0m[91mencoding/binary
+[0m[91mgithub.com/dop251/goja/unistring
+[0m[91mencoding/base64
+[0m[91mcrypto/cipher
+[0m[91mcrypto/internal/edwards25519/field
+[0m[91mvendor/golang.org/x/crypto/internal/poly1305
+[0m[91mgolang.org/x/sys/unix
+[0m[91mcrypto/internal/nistec
+[0m[91mvendor/golang.org/x/crypto/curve25519/internal/field
+golang.org/x/crypto/sha3
+[0m[91mgithub.com/cespare/xxhash/v2
+[0m[91mgolang.org/x/exp/rand
+[0m[91mcrypto/md5
+[0m[91mgithub.com/golang/snappy
+[0m[91mencoding/pem
+[0m[91mcrypto/internal/boring
+[0m[91mvendor/golang.org/x/crypto/chacha20
+[0m[91mcrypto/des
+[0m[91mcrypto/internal/edwards25519
+[0m[91mio/ioutil
+internal/godebug
+[0m[91mgoogle.golang.org/protobuf/internal/detrand
+internal/lazyregexp
+path/filepath
+[0m[91mgithub.com/prometheus/procfs/internal/util
+[0m[91mgithub.com/mattn/go-runewidth
+[0m[91mos/signal
+[0m[91mfmt
+[0m[91mcrypto/aes
+[0m[91mcrypto/hmac
+[0m[91mcrypto/sha512
+[0m[91mcrypto/sha1
+[0m[91mcrypto/sha256
+[0m[91minternal/intern
+[0m[91mvendor/golang.org/x/crypto/hkdf
+[0m[91mgolang.org/x/crypto/hkdf
+golang.org/x/crypto/pbkdf2
+[0m[91mgolang.org/x/sys/cpu
+vendor/golang.org/x/sys/cpu
+[0m[91mnet/netip
+[0m[91mgithub.com/tklauser/numcpus
+[0m[91mos/exec
+[0m[91mgolang.org/x/crypto/scrypt
+[0m[91mgithub.com/ethereum/go-ethereum/crypto/blake2b
+[0m[91mvendor/golang.org/x/crypto/chacha20poly1305
+[0m[91minternal/goroot
+[0m[91mencoding/hex
+encoding/csv
+github.com/pelletier/go-toml/v2/internal/danger
+net/http/internal
+log
+[0m[91mnet/url
+[0m[91mgoogle.golang.org/protobuf/internal/errors
+go/token
+[0m[91mmime/quotedprintable
+[0m[91mvendor/golang.org/x/net/http2/hpack
+vendor/golang.org/x/crypto/curve25519
+mime
+flag
+[0m[91mencoding/xml
+golang.org/x/net/http2/hpack
+[0m[91mtext/template/parse
+[0m[91mcompress/flate
+[0m[91mdatabase/sql/driver
+[0m[91mencoding/json
+[0m[91mencoding/gob
+[0m[91mgithub.com/ethereum/go-ethereum/rlp/internal/rlpstruct
+[0m[91mgithub.com/status-im/keycard-go/derivationpath
+github.com/go-stack/stack
+[0m[91mruntime/debug
+github.com/cockroachdb/redact/interfaces
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/util
+github.com/ethereum/go-ethereum/event
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/storage
+golang.org/x/text/internal/language
+[0m[91mgoogle.golang.org/protobuf/internal/version
+github.com/karalabe/usb
+[0m[91mmath/big
+[0m[91mgopkg.in/yaml.v2
+vendor/golang.org/x/text/unicode/norm
+[0m[91mgolang.org/x/text/unicode/norm
+[0m[91mnet
+[0m[91mgithub.com/cockroachdb/redact/internal/fmtforward
+[0m[91mgithub.com/pkg/errors
+[0m[91mgoogle.golang.org/protobuf/encoding/protowire
+[0m[91mgithub.com/cockroachdb/logtags
+[0m[91mgo/doc/comment
+[0m[91mgithub.com/pelletier/go-toml/v2/internal/ast
+[0m[91minternal/buildcfg
+[0m[91mgolang.org/x/sys/execabs
+[0m[91mgithub.com/prometheus/procfs/internal/fs
+[0m[91mgithub.com/olekukonko/tablewriter
+[0m[91mgithub.com/peterh/liner
+[0m[91mgithub.com/DataDog/zstd
+[0m[91mgithub.com/shirou/gopsutil/internal/common
+[0m[91mgithub.com/getsentry/sentry-go/internal/otel/baggage
+[0m[91mgithub.com/holiman/big
+[0m[91mgolang.org/x/sync/errgroup
+[0m[91mgithub.com/xrash/smetrics
+[0m[91mgithub.com/cockroachdb/redact/internal/markers
+[0m[91mvendor/golang.org/x/text/unicode/bidi
+[0m[91mgolang.org/x/text/unicode/bidi
+[0m[91mgithub.com/cockroachdb/redact/internal/redact
+[0m[91mgithub.com/kr/pretty
+[0m[91mgo/scanner
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/cache
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/filter
+[0m[91mgithub.com/pelletier/go-toml/v2/internal/tracker
+[0m[91mgoogle.golang.org/protobuf/reflect/protoreflect
+[0m[91mos/user
+[0m[91mgithub.com/fjl/memsize
+[0m[91mruntime/trace
+[0m[91mgithub.com/davecgh/go-spew/spew
+[0m[91mgithub.com/tyler-smith/go-bip39/wordlists
+[0m[91mgithub.com/cockroachdb/redact/internal/escape
+golang.org/x/time/rate
+[0m[91mgithub.com/graph-gophers/graphql-go/errors
+[0m[91mcompress/gzip
+[0m[91mgithub.com/graph-gophers/graphql-go/log
+[0m[91mtext/scanner
+[0m[91mgithub.com/opentracing/opentracing-go/log
+[0m[91mgithub.com/influxdata/influxdb-client-go/v2/log
+[0m[91mgolang.org/x/sync/singleflight
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/errors
+[0m[91mgithub.com/influxdata/influxdb-client-go/v2/api/query
+[0m[91mgithub.com/influxdata/line-protocol
+[0m[91mgithub.com/influxdata/influxdb/models
+[0m[91mtesting
+[0m[91mgithub.com/dlclark/regexp2/syntax
+[0m[91mgithub.com/dop251/goja/ftoa/internal/fast
+[0m[91mgithub.com/cockroachdb/redact/internal/buffer
+[0m[91mruntime/pprof
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/opt
+[0m[91minternal/profile
+[0m[91mgithub.com/pelletier/go-toml/v2
+[0m[91mgo/ast
+[0m[91mgithub.com/influxdata/influxdb-client-go/v2/internal/log
+[0m[91mgithub.com/influxdata/influxdb-client-go/v2/internal/gzip
+[0m[91mgithub.com/naoina/go-stringutil
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/iterator
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/journal
+[0m[91mgithub.com/graph-gophers/graphql-go/types
+[0m[91mtext/template
+[0m[91mgithub.com/fsnotify/fsnotify
+[0m[91mgithub.com/tklauser/go-sysconf
+[0m[91mgithub.com/mattn/go-isatty
+[0m[91mgithub.com/edsrzf/mmap-go
+[0m[91mgithub.com/prometheus/tsdb/fileutil
+[0m[91mgithub.com/VictoriaMetrics/fastcache
+[0m[91mgithub.com/huin/goupnp/scpd
+[0m[91mgithub.com/cockroachdb/redact/internal/rfmt
+[0m[91mgolang.org/x/text/secure/bidirule
+[0m[91mgithub.com/graph-gophers/graphql-go/internal/common
+[0m[91mgithub.com/graph-gophers/graphql-go/internal/exec/packer
+github.com/graph-gophers/graphql-go/introspection
+[0m[91mgithub.com/ethereum/go-ethereum/console/prompt
+[0m[91mgithub.com/mattn/go-colorable
+github.com/naoina/toml
+[0m[91mvendor/golang.org/x/text/secure/bidirule
+[0m[91mgithub.com/syndtr/goleveldb/leveldb/memdb
+github.com/syndtr/goleveldb/leveldb/table
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/messageset
+[0m[91mgoogle.golang.org/protobuf/internal/genid
+[0m[91mgoogle.golang.org/protobuf/internal/order
+[0m[91mgoogle.golang.org/protobuf/internal/strs
+[0m[91mgoogle.golang.org/protobuf/internal/descopts
+google.golang.org/protobuf/runtime/protoiface
+[0m[91mgoogle.golang.org/protobuf/internal/descfmt
+[0m[91mgithub.com/graph-gophers/graphql-go/internal/query
+[0m[91mgithub.com/graph-gophers/graphql-go/internal/schema
+[0m[91mgithub.com/gin-gonic/gin/internal/json
+[0m[91mgithub.com/go-playground/universal-translator
+github.com/leodido/go-urn
+github.com/deckarep/golang-set/v2
+[0m[91mgolang.org/x/net/idna
+[0m[91mgithub.com/shirou/gopsutil/cpu
+[0m[91mgithub.com/gogo/protobuf/proto
+[0m[91mgithub.com/prometheus/common/model
+[0m[91mgithub.com/graph-gophers/graphql-go/internal/exec/resolvable
+[0m[91mvendor/golang.org/x/net/idna
+[0m[91mgolang.org/x/text/internal/language/compact
+[0m[91mgithub.com/deepmap/oapi-codegen/pkg/types
+[0m[91mgithub.com/shirou/gopsutil/mem
+[0m[91mgithub.com/go-sourcemap/sourcemap
+[0m[91mgoogle.golang.org/protobuf/reflect/protoregistry
+[0m[91mgithub.com/fatih/color
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/text
+[0m[91mgithub.com/graph-gophers/graphql-go/internal/validation
+[0m[91mgo/internal/typeparams
+[0m[91mgo/printer
+[0m[91mgo/doc
+[0m[91mgithub.com/cockroachdb/redact/builder
+[0m[91mgithub.com/influxdata/influxdb-client-go/v2/api/write
+[0m[91mgithub.com/dop251/goja/file
+[0m[91mgithub.com/syndtr/goleveldb/leveldb
+[0m[91mgo/parser
+[0m[91mgithub.com/cockroachdb/redact
+[0m[91mgolang.org/x/text/language
+[0m[91mgithub.com/deepmap/oapi-codegen/pkg/runtime
+[0m[91mgithub.com/graph-gophers/graphql-go/internal/exec/selected
+[0m[91mgithub.com/cockroachdb/pebble/internal/humanize
+[0m[91mhtml/template
+github.com/urfave/cli/v2
+[0m[91mgithub.com/dop251/goja/ast
+[0m[91mgoogle.golang.org/protobuf/proto
+[0m[91mgithub.com/dlclark/regexp2
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/defval
+[0m[91mcrypto/elliptic
+[0m[91mcrypto/rand
+[0m[91mcrypto/dsa
+crypto/internal/boring/bbig
+[0m[91mencoding/asn1
+[0m[91mgithub.com/ethereum/go-ethereum/common/hexutil
+[0m[91mgithub.com/ethereum/go-ethereum/common/math
+[0m[91mgithub.com/holiman/uint256
+[0m[91mgithub.com/dop251/goja/ftoa
+[0m[91mgithub.com/ethereum/go-ethereum/rlp
+[0m[91mgithub.com/dop251/goja/parser
+[0m[91mcrypto/ed25519
+[0m[91mgithub.com/holiman/bloomfilter/v2
+crypto/rsa
+[0m[91mgithub.com/ethereum/go-ethereum/crypto/bn256/cloudflare
+[0m[91mgithub.com/tyler-smith/go-bip39
+[0m[91mgithub.com/crate-crypto/go-ipa/bandersnatch/fr
+[0m[91mgithub.com/crate-crypto/go-ipa/bandersnatch/fp
+[0m[91mgolang.org/x/text/internal
+[0m[91mgolang.org/x/text/internal/colltab
+[0m[91mgithub.com/ethereum/go-ethereum/common
+[0m[91mgithub.com/ethereum/go-ethereum/crypto/secp256k1
+[0m[91mgolang.org/x/text/cases
+[0m[91mgolang.org/x/crypto/ed25519
+[0m[91mgo/format
+[0m[91mgo/build
+[0m[91mgithub.com/jedisct1/go-minisign
+[0m[91mgoogle.golang.org/protobuf/encoding/prototext
+[0m[91mgoogle.golang.org/protobuf/internal/filedesc
+[0m[91mcrypto/x509/pkix
+[0m[91mvendor/golang.org/x/crypto/cryptobyte
+[0m[91mgithub.com/ethereum/go-ethereum/les/vflux
+[0m[91mgithub.com/ethereum/go-ethereum/ethdb/memorydb
+[0m[91mgithub.com/ethereum/go-ethereum/params
+[0m[91mgithub.com/ethereum/go-ethereum/crypto/bls12381
+[0m[91mlog/syslog
+[0m[91mnet/textproto
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/netutil
+[0m[91mvendor/golang.org/x/net/http/httpproxy
+[0m[91mgithub.com/google/uuid
+[0m[91mgithub.com/go-playground/validator/v10
+[0m[91mgithub.com/gballet/go-libpcsclite
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/enr
+[0m[91mgithub.com/jackpal/go-nat-pmp
+[0m[91mgithub.com/mitchellh/mapstructure
+[0m[91mgithub.com/prometheus/procfs
+[0m[91mgolang.org/x/text/collate
+[0m[91mgithub.com/ethereum/go-ethereum/log
+[0m[91mgithub.com/crate-crypto/go-ipa/bandersnatch
+[0m[91mgithub.com/ethereum/go-ethereum/crypto/bn256
+[0m[91mcrypto/ecdsa
+[0m[91mvendor/golang.org/x/net/http/httpguts
+[0m[91mmime/multipart
+[0m[91mgolang.org/x/net/http/httpguts
+[0m[91mcrypto/x509
+[0m[91mgithub.com/ethereum/go-ethereum/internal/version
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/msgrate
+[0m[91mgithub.com/ethereum/go-ethereum/les/flowcontrol
+[0m[91mgithub.com/ethereum/go-ethereum/metrics
+[0m[91mgithub.com/mitchellh/pointerstructure
+[0m[91mgithub.com/ethereum/go-ethereum/internal/flags
+[0m[91mgoogle.golang.org/protobuf/internal/encoding/tag
+[0m[91mgithub.com/crate-crypto/go-ipa/banderwagon
+[0m[91mgoogle.golang.org/protobuf/internal/impl
+[0m[91mgithub.com/hashicorp/go-bexpr/grammar
+[0m[91mgithub.com/crate-crypto/go-ipa/common
+[0m[91mgithub.com/crate-crypto/go-ipa/ipa
+[0m[91mgithub.com/crate-crypto/go-ipa
+[0m[91mgithub.com/gballet/go-verkle
+[0m[91mgithub.com/hashicorp/go-bexpr
+[0m[91mgithub.com/gogo/protobuf/protoc-gen-gogo/descriptor
+[0m[91mgithub.com/gogo/protobuf/types
+[0m[91mgithub.com/golang-jwt/jwt/v4
+[0m[91mcrypto/tls
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/tracker
+github.com/ethereum/go-ethereum/ethdb/leveldb
+[0m[91mgithub.com/gogo/protobuf/gogoproto
+[0m[91mnet/http/httptrace
+[0m[91mgithub.com/cockroachdb/errors/errorspb
+[0m[91mnet/http
+[0m[91mgoogle.golang.org/protobuf/internal/filetype
+[0m[91mgoogle.golang.org/protobuf/runtime/protoimpl
+[0m[91mgoogle.golang.org/protobuf/types/known/timestamppb
+[0m[91mgoogle.golang.org/protobuf/types/descriptorpb
+[0m[91mgithub.com/cockroachdb/errors/errbase
+[0m[91mgithub.com/golang/protobuf/ptypes/timestamp
+[0m[91mgithub.com/cockroachdb/errors/markers
+[0m[91mgithub.com/cockroachdb/errors/barriers
+[0m[91mgithub.com/cockroachdb/errors/contexttags
+[0m[91mgithub.com/cockroachdb/errors/secondary
+[0m[91mgithub.com/cockroachdb/errors/hintdetail
+[0m[91mgithub.com/cockroachdb/errors/safedetails
+[0m[91mgithub.com/cockroachdb/errors/telemetrykeys
+[0m[91mgithub.com/cockroachdb/errors/domains
+[0m[91mgithub.com/golang/protobuf/protoc-gen-go/descriptor
+google.golang.org/protobuf/reflect/protodesc
+[0m[91mgithub.com/cockroachdb/errors/issuelink
+[0m[91mgithub.com/cockroachdb/errors/assert
+[0m[91mgithub.com/dop251/goja
+[0m[91mgithub.com/golang/protobuf/proto
+[0m[91mgithub.com/prometheus/client_model/go
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/usbwallet/trezor
+[0m[91mgithub.com/matttproud/golang_protobuf_extensions/pbutil
+[0m[91mgithub.com/prometheus/client_golang/prometheus/internal
+[0m[91mgithub.com/gin-contrib/sse
+[0m[91mexpvar
+[0m[91mgithub.com/huin/goupnp/httpu
+github.com/getsentry/sentry-go/internal/ratelimit
+net/rpc
+[0m[91mgithub.com/huin/goupnp/soap
+github.com/ethereum/go-ethereum/metrics/prometheus
+[0m[91mnet/http/httputil
+[0m[91mgithub.com/prometheus/common/expfmt
+[0m[91mgithub.com/fjl/memsize/memsizeui
+[0m[91mnet/http/pprof
+[0m[91mgithub.com/rs/cors
+[0m[91mgithub.com/gorilla/websocket
+[0m[91mgithub.com/opentracing/opentracing-go
+[0m[91mgithub.com/influxdata/influxdb-client-go/v2/api/http
+net/http/cookiejar
+[0m[91mgithub.com/influxdata/influxdb/client
+[0m[91mgolang.org/x/net/http2
+[0m[91mgithub.com/huin/goupnp/ssdp
+[0m[91mgithub.com/ethereum/go-ethereum/metrics/exp
+[0m[91mgithub.com/opentracing/opentracing-go/ext
+[0m[91mgolang.org/x/net/publicsuffix
+[0m[91mgithub.com/influxdata/influxdb-client-go/v2/internal/write
+[0m[91mgithub.com/influxdata/influxdb-client-go/v2/domain
+[0m[91mgithub.com/graph-gophers/graphql-go/trace
+[0m[91mgithub.com/ugorji/go/codec
+[0m[91mgithub.com/huin/goupnp
+[0m[91mgithub.com/ethereum/go-ethereum/internal/debug
+[0m[91mgithub.com/getsentry/sentry-go/internal/debug
+[0m[91mgithub.com/graph-gophers/graphql-go/internal/exec
+[0m[91mgithub.com/getsentry/sentry-go
+[0m[91mgithub.com/huin/goupnp/dcps/internetgateway1
+[0m[91mgithub.com/huin/goupnp/dcps/internetgateway2
+[0m[91mgithub.com/prometheus/client_golang/prometheus
+[0m[91mgithub.com/ethereum/go-ethereum/rpc
+[0m[91mgithub.com/graph-gophers/graphql-go
+[0m[91mgithub.com/cockroachdb/errors/withstack
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/nat
+[0m[91mgithub.com/cockroachdb/errors/errutil
+[0m[91mgithub.com/cockroachdb/errors/report
+[0m[91mgithub.com/cockroachdb/errors
+[0m[91mgithub.com/cockroachdb/errors/oserror
+[0m[91mgolang.org/x/net/http2/h2c
+github.com/cockroachdb/pebble/internal/rate
+[0m[91mgithub.com/cockroachdb/pebble/vfs
+[0m[91mgithub.com/ethereum/go-ethereum/ethdb/remotedb
+[0m[91mgithub.com/cockroachdb/pebble/vfs/atomicfs
+github.com/cockroachdb/pebble/internal/base
+[0m[91mgithub.com/cockroachdb/pebble/internal/arenaskl
+[0m[91mgithub.com/cockroachdb/pebble/internal/batchskl
+[0m[91mgithub.com/cockroachdb/pebble/bloom
+github.com/cockroachdb/pebble/internal/testkeys
+[0m[91mgithub.com/cockroachdb/pebble/objstorage
+[0m[91mgithub.com/cockroachdb/pebble/record
+[0m[91mgithub.com/cockroachdb/pebble/internal/cache
+[0m[91mgithub.com/cockroachdb/pebble/internal/manifest
+[0m[91mgithub.com/cockroachdb/pebble/internal/keyspan
+[0m[91mgithub.com/cockroachdb/pebble/internal/private
+github.com/cockroachdb/pebble/internal/rangedel
+[0m[91mgithub.com/cockroachdb/pebble/internal/rangekey
+[0m[91mgithub.com/gin-gonic/gin/binding
+github.com/gin-gonic/gin/render
+[0m[91mgithub.com/gin-gonic/gin
+[0m[91mgithub.com/influxdata/influxdb-client-go/v2/api
+[0m[91mchainmaker.org/chainmaker/recorderfile
+[0m[91mgithub.com/influxdata/influxdb-client-go/v2
+[0m[91mgithub.com/ethereum/go-ethereum/metrics/influxdb
+[0m[91mgithub.com/ethereum/go-ethereum/internal/jsre
+[0m[91mgithub.com/ethereum/go-ethereum/crypto
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/enode
+github.com/ethereum/go-ethereum/crypto/ecies
+github.com/ethereum/go-ethereum/core/types
+github.com/ethereum/go-ethereum/accounts/abi
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/rlpx
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/discover/v4wire
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/discover/v5wire
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/dnsdisc
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/nodestate
+[0m[91mgithub.com/ethereum/go-ethereum/les/utils
+[0m[91mgithub.com/ethereum/go-ethereum
+github.com/ethereum/go-ethereum/core/bloombits
+[0m[91mgithub.com/ethereum/go-ethereum/core/forkid
+[0m[91mgithub.com/ethereum/go-ethereum/core/vm
+[0m[91mgithub.com/ethereum/go-ethereum/ethclient
+[0m[91mgithub.com/ethereum/go-ethereum/accounts
+[0m[91mgithub.com/ethereum/go-ethereum/les/vflux/server
+github.com/ethereum/go-ethereum/les/vflux/client
+[0m[91mgithub.com/ethereum/go-ethereum/p2p/discover
+[0m[91mgithub.com/ethereum/go-ethereum/signer/core/apitypes
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/usbwallet
+github.com/ethereum/go-ethereum/accounts/keystore
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/scwallet
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/external
+[0m[91mgithub.com/ethereum/go-ethereum/console
+[0m[91mgithub.com/ethereum/go-ethereum/p2p
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/abi/bind
+[0m[91mgithub.com/ethereum/go-ethereum/eth/tracers/logger
+[0m[91mgithub.com/ethereum/go-ethereum/contracts/checkpointoracle/contract
+[0m[91mgithub.com/ethereum/go-ethereum/contracts/checkpointoracle
+[0m[91mgithub.com/ethereum/go-ethereum/les/checkpointoracle
+[0m[91mgithub.com/cockroachdb/pebble/sstable
+[0m[91mgithub.com/cockroachdb/pebble
+[0m[91mgithub.com/ethereum/go-ethereum/ethdb/pebble
+[0m[91mgithub.com/ethereum/go-ethereum/core/rawdb
+[0m[91mgithub.com/ethereum/go-ethereum/internal/shutdowncheck
+[0m[91mgithub.com/ethereum/go-ethereum/node
+[0m[91mgithub.com/ethereum/go-ethereum/trie
+[0m[91mgithub.com/ethereum/go-ethereum/beacon/engine
+[0m[91mgithub.com/ethereum/go-ethereum/core/state/snapshot
+[0m[91mgithub.com/ethereum/go-ethereum/core/state/pruner
+[0m[91mgithub.com/ethereum/go-ethereum/core/state
+[0m[91mgithub.com/ethereum/go-ethereum/consensus
+[0m[91mgithub.com/ethereum/go-ethereum/consensus/misc
+[0m[91mgithub.com/ethereum/go-ethereum/consensus/beacon
+github.com/ethereum/go-ethereum/les/fetcher
+github.com/ethereum/go-ethereum/consensus/clique
+[0m[91mgithub.com/ethereum/go-ethereum/consensus/ethash
+[0m[91mgithub.com/ethereum/go-ethereum/core
+[0m[91mgithub.com/ethereum/go-ethereum/eth/gasprice
+[0m[91mgithub.com/ethereum/go-ethereum/core/txpool
+[0m[91mgithub.com/ethereum/go-ethereum/internal/ethapi
+[0m[91mgithub.com/ethereum/go-ethereum/eth/protocols/eth
+[0m[91mgithub.com/ethereum/go-ethereum/light
+[0m[91mgithub.com/ethereum/go-ethereum/eth/tracers
+[0m[91mgithub.com/ethereum/go-ethereum/eth/filters
+[0m[91mgithub.com/ethereum/go-ethereum/accounts/abi/bind/backends
+[0m[91mgithub.com/ethereum/go-ethereum/graphql
+[0m[91mgithub.com/ethereum/go-ethereum/eth/fetcher
+[0m[91mgithub.com/ethereum/go-ethereum/eth/tracers/native
+[0m[91mgithub.com/ethereum/go-ethereum/eth/tracers/js
+[0m[91mgithub.com/ethereum/go-ethereum/eth/protocols/snap
+[0m[91mgithub.com/ethereum/go-ethereum/les/downloader
+[0m[91mgithub.com/ethereum/go-ethereum/eth/downloader
+[0m[91mgithub.com/ethereum/go-ethereum/miner
+[0m[91mgithub.com/ethereum/go-ethereum/eth/ethconfig
+[0m[91mgithub.com/ethereum/go-ethereum/eth
+[0m[91mgithub.com/ethereum/go-ethereum/les
+[0m[91mgithub.com/ethereum/go-ethereum/eth/catalyst
+[0m[91mgithub.com/ethereum/go-ethereum/ethstats
+[0m[91mgithub.com/ethereum/go-ethereum/les/catalyst
+[0m[91mgithub.com/ethereum/go-ethereum/cmd/utils
+[0m[91mgithub.com/ethereum/go-ethereum/cmd/geth
+[0mRemoving intermediate container da26efbfa163
+ ---> 338f256bb8f5
+Step 11/20 : FROM alpine:latest
+ ---> 8ca4688f4f35
+Step 12/20 : RUN apk add --no-cache ca-certificates
+ ---> Using cache
+ ---> 7c4882af57ab
+Step 13/20 : RUN apk add --no-cache netcat-openbsd
+ ---> Using cache
+ ---> 16b23120e67b
+Step 14/20 : COPY --from=builder /go-ethereum/build/bin/geth /usr/local/bin/
+ ---> Using cache
+ ---> fa5a12442199
+Step 15/20 : COPY cmd/recorderfile /go-ethereum/cmd/
+ ---> Using cache
+ ---> d541e9aa6c49
+Step 16/20 : COPY docker_data/ /usr/local/bin/
+ ---> 1ce620fdada9
+Step 17/20 : RUN chmod 777 /usr/local/bin/start_node1.sh
+ ---> Running in 23b2091b0727
+Removing intermediate container 23b2091b0727
+ ---> ca805e8bb900
+Step 18/20 : RUN chmod 777 /usr/local/bin/start_node2.sh
+ ---> Running in e60a38680c80
+Removing intermediate container e60a38680c80
+ ---> 65258b5147ac
+Step 19/20 : RUN chmod 777 /usr/local/bin/start_node3.sh
+ ---> Running in cf1562729c53
+Removing intermediate container cf1562729c53
+ ---> b0bfa2a4988e
+Step 20/20 : RUN chmod 777 /usr/local/bin/start_node4.sh
+ ---> Running in fde0402a8771
+Removing intermediate container fde0402a8771
+ ---> 04899f5caf44
+Successfully built 04899f5caf44
+Successfully tagged swr.cn-north-4.myhuaweicloud.com/buaa-dist-compute-ci/ethereum-recorder:4_2
+sudo docker push swr.cn-north-4.myhuaweicloud.com/buaa-dist-compute-ci/ethereum-recorder:4_2
+The push refers to repository [swr.cn-north-4.myhuaweicloud.com/buaa-dist-compute-ci/ethereum-recorder]
+2fbcad6d834f: Preparing
+56092fe35504: Preparing
+b060067e2843: Preparing
+222932420937: Preparing
+317ba3f99f87: Preparing
+e9fe57236a8d: Preparing
+d5d8b0274f3a: Preparing
+57bdfac80934: Preparing
+5f471d772c6a: Preparing
+cc2447e1835a: Preparing
+e9fe57236a8d: Waiting
+d5d8b0274f3a: Waiting
+57bdfac80934: Waiting
+5f471d772c6a: Waiting
+cc2447e1835a: Waiting
+222932420937: Pushed
+2fbcad6d834f: Pushed
+317ba3f99f87: Pushed
+d5d8b0274f3a: Layer already exists
+57bdfac80934: Layer already exists
+56092fe35504: Pushed
+cc2447e1835a: Layer already exists
+5f471d772c6a: Layer already exists
+e9fe57236a8d: Pushed
+b060067e2843: Pushed
+4_2: digest: sha256:4e841620d9eab45a79dccb4c887c478a9a74dcd49c3ab178b2faf475770db6d9 size: 2403
+make[1]: 离开目录“/home/songweihu/projects/eth/ethereum-recorder”
+# 部署节点1
+kubectl apply -f  deploy_node.yml -n swh
+deployment.apps/ethereum-test-node1 created
+service/ethereum-test-instance1 created
+# 部署成功再执行后续操作
+while true; do \
+	if [ != "Running"]; then \
+		sleep 1; \
+	fi \
+done
+Makefile:74: recipe for target 'deploy' failed

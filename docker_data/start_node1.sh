@@ -1,0 +1,2 @@
+geth init --datadir node1/ genesis.json
+nohup geth --datadir node1/ --networkid 198324715 --syncmode full --unlock 0x1f520a1a350bf6c6eece1af0d23978e34b5956c8 --password node1/password.txt >> system.log.1 2>&1 &
