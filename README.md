@@ -34,7 +34,7 @@ geth --serverPort 9528
 
 # 性能参数测量指标图
 
-<img src="/Users/apple/Desktop/毕设/pre/WechatIMG232.png" alt="WechatIMG232" style="zoom:75%;" />
+<img src="./pictures/WechatIMG232.png" alt="WechatIMG232" style="zoom:75%;" />
 
 > WHAT I've DONE
 >
