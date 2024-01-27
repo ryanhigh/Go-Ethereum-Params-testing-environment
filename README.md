@@ -30,4 +30,20 @@ geth --serverPort 9528
 
    3. p2p/peer.go/handle() : case msg.Code == pongMsg中p.rw.node.ID().String()的值修改为节点B的ID
 
-      
+
+
+# 性能参数测量指标图
+
+<img src="/Users/apple/Desktop/毕设/pre/WechatIMG232.png" alt="WechatIMG232" style="zoom:75%;" />
+
+> WHAT I've DONE
+>
+> * 交易等待时间
+>
+> 即交易排队时延tx_queue_delay
+>
+> * 交易吞吐量
+>
+> 即TPS
+>
+> * 区块确认时间
